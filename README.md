@@ -37,5 +37,40 @@ The biggest hurdle for instructors using digital video conferencing platforms is
 #### Metrics
 
 
+#### Snake game
+
+##### Features
+
+- For a single player, if player's snake hits the wall or hits snake itself game over.
+- Number of eggs ate
+- Random scoring opportunities with additional eggs/fruits.
+- Speed of snake should be increased incrementally.
+- Size of snake increased incrementally.
+
+- Touch the other player snake, game will be over, score of the person who's snake touched other's will be  zeroed.
+- All other rules same as single player
+
+##### Rules
+- Hit egg 10 points
+- Hit random fruits => size * 2
+- Snake hits the wall in multiplayer decrease max points by 20 (open)
+
+##### Pause Rules
+- Single can pause
+- Multiple can't pause
+
+
+#### winner
+- One who has more points
+
+#### UI
+- Mobile => Joystick
+
+
+#### Tech
+- React js, Node js, web sockets
+
+
+#### 
 
 
