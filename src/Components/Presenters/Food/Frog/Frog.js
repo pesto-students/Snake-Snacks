@@ -19,6 +19,6 @@ export default function Frog({ ctx }) {
   }, [ctx, foodPosition, movement]);
 
   return (
-    <img src={frog} ref={frogRef} alt="normal food" />
+    <img src={frog} width="20" height="20" ref={frogRef} alt="normal food" />
   );
 }

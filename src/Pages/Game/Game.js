@@ -33,6 +33,7 @@ export default function Game() {
   const [snake, setSnake] = useState(defaultSnake);
   const [movement, setMovement] = useState({ x: 10, y: 0 });
   const [foodPosition, setFoodPosition] = useState({ x: 100, y: 100 });
+  const [score, setScore] = useState(0);
   const direction = KeyEvents();
   const canvasRef = useRef();
 
@@ -90,6 +91,8 @@ export default function Game() {
             setMovement,
             foodPosition,
             setFoodPosition,
+            score,
+            setScore,
           }
 }
     >
