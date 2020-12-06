@@ -1,0 +1,14 @@
+.btn {
+  border: none;
+  background: #efd887;
+  color: #c84e41;
+  border-radius: 10px;
+  font-family: "BUBBLEGUM SANS";
+  padding: 12px 20px;
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+
+.btn:hover {
+    background: var(--flax);
+}

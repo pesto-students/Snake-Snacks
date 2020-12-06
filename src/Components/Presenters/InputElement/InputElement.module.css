@@ -1,0 +1,16 @@
+.input {
+  background: rgba(239, 216, 135, 0.6);
+  border: 0.5px solid #000000;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-size: 52px;
+  padding: 16px;
+  color: #ef732d;
+}
+
+.input::placeholder,
+.input::-webkit-input-placeholder {
+  font-size: 52px;
+  line-height: 100%;
+  color: rgba(200, 78, 65, 0.3);
+}

@@ -2,6 +2,17 @@
   text-align: center;
 }
 
+
+.title-8 {
+  font-size: 8rem;
+  line-height: 0.8;
+}
+
+.title-7 {
+  font-size: 7rem;
+  line-height: 0.8;
+}
+
 .title-6 {
   font-size: 6rem;
   line-height: 0.8;
@@ -35,5 +46,9 @@
 
 .white-gray {
   color: #E7E2E2;
+}
+
+.tango {
+  color: var(--tango) !important;
 }
 
