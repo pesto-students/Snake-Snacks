@@ -9,6 +9,18 @@
   cursor: pointer;
 }
 
-.btn:hover {
-    background: var(--flax);
+.btn:disabled {
+  background-color: #888888;
+  color: #bababa !important;
 }
+
+.btn:hover {
+  background: var(--flax);
+}
+
+.btn:disabled:hover {
+  background-color: #888888;
+  color: #bababa !important;
+  cursor: not-allowed;
+}
+
