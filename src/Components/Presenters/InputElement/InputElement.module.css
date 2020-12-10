@@ -3,14 +3,18 @@
   border: 0.5px solid #000000;
   box-sizing: border-box;
   border-radius: 10px;
-  font-size: 52px;
-  padding: 16px;
+  font-size: 48px;
+  padding: 12px;
   color: #ef732d;
+  margin: 10px;
+  width: 500px;
+  box-sizing: border-box;
+  font-family: 'Bubblegum Sans', cursive;
 }
 
 .input::placeholder,
 .input::-webkit-input-placeholder {
-  font-size: 52px;
+  font-size: 48px;
   line-height: 100%;
   color: rgba(200, 78, 65, 0.3);
 }

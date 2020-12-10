@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  overflow: hidden;
 }
 
 
@@ -52,3 +53,7 @@
   color: var(--tango) !important;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
