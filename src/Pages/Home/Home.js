@@ -31,10 +31,15 @@ export default function Home() {
               X
             </button>
           </div>
-          <ul className={styles['dialog-content']}>
-            <li><Link to="/login">Login</Link></li>
-            <li><Link to="/signup">Signup</Link></li>
-          </ul>
+          {
+            localStorage.getItem('access_token')
+              ? null : (
+                <ul className={styles['dialog-content']}>
+                  <li><Link to="/login">Login</Link></li>
+                  <li><Link to="/register">Signup</Link></li>
+                </ul>
+              )
+          }
         </div>
       </Dialog>
       <div className="title-container">
