@@ -35,6 +35,7 @@ export default function Game() {
         <Snake
           handleScore={handleScore}
           foodPosition={foodPosition}
+          score={score}
           setFoodPosition={setFoodPosition}
         />
         <Frog />

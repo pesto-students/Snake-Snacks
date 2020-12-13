@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Dialog from '../../Components/Dialog/Dialog';
 import Button from '../../Components/Presenters/Button/Button';
 import Title from '../../Components/Title/Title';
+import userContext from '../../Utils/userContext';
 import styles from './Home.module.css';
 import menu from './menu.svg';
 
 export default function Home() {
   const history = useHistory();
   const redirectToGame = () => history.push('/game');
+  const userDetailsContext = useContext(userContext);
 
   return (
     <div className={styles.board}>
@@ -33,7 +35,15 @@ export default function Home() {
           </div>
           {
             localStorage.getItem('access_token')
-              ? null : (
+              ? (
+                <ul className={styles['dialog-content']}>
+                  <li>
+                    Hi,
+                    {` ${userDetailsContext.username}`}
+                  </li>
+                  <li>Scoreboard</li>
+                </ul>
+              ) : (
                 <ul className={styles['dialog-content']}>
                   <li><Link to="/login">Login</Link></li>
                   <li><Link to="/register">Signup</Link></li>
@@ -48,7 +58,7 @@ export default function Home() {
       </div>
       <div className={styles.buttons}>
         <Button
-          title="Start game as guest"
+          title={userDetailsContext.username ? 'Start Game' : 'Start Game As Guest'}
           handleClick={redirectToGame}
           classNames={['white']}
         />

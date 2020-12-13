@@ -1,17 +1,18 @@
-/* eslint-disable no-console */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-underscore-dangle */
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '../../Components/Presenters/Button/Button';
 import InputElement from '../../Components/Presenters/InputElement/InputElement';
 import Title from '../../Components/Title/Title';
 import login, { LoginFormConfig, validate } from '../../Utils/LoginCallback';
+import userContext from '../../Utils/userContext';
 import './Login.css';
 
 function Login() {
   const [form, setForm] = useState(LoginFormConfig());
+  const userDetailsContext = useContext(userContext);
   const history = useHistory();
 
   const changeHandler = (event) => {
@@ -64,6 +65,8 @@ function Login() {
     const promise = login();
     promise(getValues()).then((res) => res.json()).then((res) => {
       localStorage.setItem('access_token', res['auth-token']);
+      userDetailsContext.setUsername(res.username);
+      userDetailsContext.setId(res.userId);
       return history.push('/home');
     }).catch((res) => {
       console.error(res);

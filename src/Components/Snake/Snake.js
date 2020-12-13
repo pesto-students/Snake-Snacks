@@ -7,6 +7,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { select } from 'd3';
+import SaveScore from '../../Utils/SaveScore';
 
 function createPoints(N, L) {
   const x = 40;
@@ -126,7 +127,9 @@ class Snake extends Component {
 
     let snakeEatsFrog = false;
 
-    const { foodPosition, setFoodPosition, handleScore } = this.props;
+    const {
+      foodPosition, setFoodPosition, score, handleScore,
+    } = this.props;
 
     if (!foodPosition) {
       return;
@@ -148,9 +151,23 @@ class Snake extends Component {
       setFoodPosition({ x: randomNumber, y: randomNumber });
       this.N += 1;
       this.del += 0.02;
-      handleScore(5);
+      this.saveScoreToServer(score + 5);
+      if (localStorage.getItem('access_token')) {
+        handleScore(5);
+      }
       this.increaseSnakeLength(headTip);
     }
+  }
+
+  saveScoreToServer(score) {
+    if (this.scoreTimer) {
+      clearTimeout(this.scoreTimer);
+    }
+    this.scoreTimer = setTimeout(() => {
+      SaveScore()({ score, mode: 'single' }).then((res) => {
+        console.log(res);
+      });
+    }, 100);
   }
 
   moveUp() {
