@@ -68,8 +68,6 @@ function Login() {
       userDetailsContext.setUsername(res.username);
       userDetailsContext.setId(res.userId);
       return history.push('/home');
-    }).catch((res) => {
-      console.error(res);
     });
   };
 
