@@ -152,9 +152,9 @@ class Snake extends Component {
       setFoodPosition({ x: randomNumber, y: randomNumber });
       this.N += 1;
       this.del += 0.02;
-      this.saveScoreToServer(score + 5);
+      handleScore(5);
       if (localStorage.getItem('access_token')) {
-        handleScore(5);
+        this.saveScoreToServer(score + 5);
       }
       this.increaseSnakeLength(headTip);
     }
