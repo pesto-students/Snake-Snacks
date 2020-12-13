@@ -63,7 +63,6 @@ function Login() {
     event.preventDefault();
     const promise = login();
     promise(getValues()).then((res) => res.json()).then((res) => {
-      console.log(res);
       localStorage.setItem('access_token', res['auth-token']);
       return history.push('/home');
     }).catch((res) => {

@@ -4,19 +4,19 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { SinglePlayerContext } from '../../../../Pages/Game/Game';
 import frog from './frog.png';
 
-export default function Frog({ ctx }) {
+export default function Frog() {
   const frogRef = useRef();
   const { movement, foodPosition } = useContext(SinglePlayerContext);
 
   const drawFood = () => {
-    if (ctx) {
-      ctx.drawImage(frogRef.current, foodPosition.x, foodPosition.y);
-    }
+    frogRef.current.style.position = 'absolute';
+    frogRef.current.style.top = `${foodPosition.y}px`;
+    frogRef.current.style.left = `${foodPosition.x}px`;
   };
 
   useEffect(() => {
     drawFood();
-  }, [ctx, foodPosition, movement]);
+  }, [foodPosition, movement]);
 
   return (
     <img src={frog} width="20" height="20" ref={frogRef} alt="normal food" />
