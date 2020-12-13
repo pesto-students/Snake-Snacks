@@ -1,0 +1,8 @@
+.score {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    font-family: Bubblegum Sans;
+    font-size: 36px;
+    color: #ffffff;
+}

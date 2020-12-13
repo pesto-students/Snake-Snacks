@@ -41,6 +41,7 @@ class Snake extends Component {
   componentDidMount() {
     this.N = 30;
     this.L = 5;
+    this.del = 2;
     this.points = createPoints(this.N, this.L);
     this.draw();
     this.headAngle = -Math.PI / 2;
@@ -146,16 +147,16 @@ class Snake extends Component {
       const randomNumber = Math.floor(Math.random() * (600 - 100 + 1) + 100);
       setFoodPosition({ x: randomNumber, y: randomNumber });
       this.N += 1;
-      handleScore(10);
+      this.del += 0.02;
+      handleScore(5);
       this.increaseSnakeLength(headTip);
     }
   }
 
   moveUp() {
     const [head, ...tail] = this.points;
-    const del = 1;
-    const x = head.x + del * Math.cos(this.headAngle);
-    const y = head.y + del * Math.sin(this.headAngle);
+    const x = head.x + this.del * Math.cos(this.headAngle);
+    const y = head.y + this.del * Math.sin(this.headAngle);
     this.updateHead(x, y);
   }
 
