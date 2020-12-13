@@ -1,17 +1,28 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useRef } from 'react';
+import { select } from 'd3';
 import { SinglePlayerContext } from '../../../../Pages/Game/Game';
-import frog from './frog.png';
 
 export default function Frog() {
   const frogRef = useRef();
   const { movement, foodPosition } = useContext(SinglePlayerContext);
 
   const drawFood = () => {
-    frogRef.current.style.position = 'absolute';
-    frogRef.current.style.top = `${foodPosition.y}px`;
-    frogRef.current.style.left = `${foodPosition.x}px`;
+    const node = select(frogRef.current);
+    node.selectChildren().remove();
+    node.style('position', 'absolute');
+    node.style('top', `${foodPosition.x}px`);
+    node.style('left', `${foodPosition.y}px`);
+    node.attr('id', () => 'frogFood');
+    node.append('div')
+      .style('position', 'absolute')
+      .style('width', '30px')
+      .style('height', '40px')
+      .style('background', '#E7E2E2')
+      .style('z-index', '100')
+      .style('box-shadow', '1px 1px 2px 1px #888888')
+      .style('border-radius', '50% 50% 50% 50% / 60% 60% 40% 40%');
   };
 
   useEffect(() => {
@@ -19,6 +30,6 @@ export default function Frog() {
   }, [foodPosition, movement]);
 
   return (
-    <img src={frog} width="20" height="20" ref={frogRef} alt="normal food" />
+    <div ref={frogRef} />
   );
 }

@@ -43,7 +43,7 @@ class Snake extends Component {
   componentDidMount() {
     this.N = 30;
     this.L = 5;
-    this.del = 2;
+    this.del = 1;
     this.points = createPoints(this.N, this.L);
     this.draw();
     this.headAngle = -Math.PI / 2;
@@ -140,8 +140,8 @@ class Snake extends Component {
     const headX = Math.round(headTip.x);
     const headY = Math.round(headTip.y);
 
-    const isInHorizontalInline = (headX <= x + 15 && headX > (x - 25));
-    const isInVerticalInline = (headY <= y + 15 && headY > (y - 25));
+    const isInHorizontalInline = (headX <= x + 20 && headX > (x - 30));
+    const isInVerticalInline = (headY <= y + 30 && headY > (y - 35));
 
     if (isInHorizontalInline && isInVerticalInline) {
       snakeEatsFrog = true;
