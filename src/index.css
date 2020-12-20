@@ -21,8 +21,9 @@ body {
   font-size: 1vw;
   background-color: var(--sprint-rain-60);
   width: 100%;
-  height: 100%;
+  height: 100vh;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 code {

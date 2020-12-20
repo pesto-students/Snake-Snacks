@@ -1,0 +1,16 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
+
+.login-form > button:last-child {
+    align-self: flex-end;
+}

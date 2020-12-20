@@ -1,5 +1,17 @@
 .App {
   text-align: center;
+  overflow: hidden;
+}
+
+
+.title-8 {
+  font-size: 8rem;
+  line-height: 0.8;
+}
+
+.title-7 {
+  font-size: 7rem;
+  line-height: 0.8;
 }
 
 .title-6 {
@@ -37,3 +49,11 @@
   color: #E7E2E2;
 }
 
+.tango {
+  color: var(--tango) !important;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
