@@ -34,6 +34,6 @@ test('test whole routing', async () => {
   // with reach-router we don't need to simulate a click event, we can just transition
   // to the page using the navigate function returned from the history object.
   await navigate('/game');
-  linkElement = screen.getByText(/Board/i);
+  linkElement = screen.getByTestId(/snake/i);
   expect(linkElement).toBeInTheDocument();
 });
