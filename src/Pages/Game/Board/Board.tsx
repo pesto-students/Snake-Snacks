@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Food from '../../../Components/Food/Food';
+import JoyStick from '../../../Components/JoyStick/JoyStick';
+import Score from '../../../Components/Score/Score';
 import Snake from '../../../Components/Snake/Snake';
+import { Title } from '../../../Components/Title/Title';
 import isPointsInBound from '../../../Utils/usePointsInBoundedRect';
 
 function getNewPosition(x1: number, y1: number, x2: number, y2: number) {
@@ -104,7 +107,7 @@ export default class Board extends Component<IProps, IState> {
       const { x, y, width, height } = boardRef?.getBoundingClientRect();
       const isSnakeHitBoundary = isPointsInBound(
         { x: snakeX, y: snakeY },
-        { x1: x + 10, y1: y + 10, x2: x - 35 + width, y2: y - 35 + height },
+        { x1: x, y1: y, x2: x - 30 + width, y2: y - 30 + height },
       );
       if (!isSnakeHitBoundary) {
         this.setState((prevState) => ({
@@ -118,21 +121,35 @@ export default class Board extends Component<IProps, IState> {
   render() {
     const { foodPosition, snakeStatus, score } = this.state;
     return (
-      <div className="h-screen w-screen box-border overflow-hidden">
+      <div className="h-screen w-screen box-border c-linear-gradient rounded-xl c-box-shadow overflow-hidden">
         <div
-          className="h-full w-4/5 inline-block box-border border-8 border-flaxShade"
-          id="board"
+          className="h-full w-4/5 md:w-full md:h-4/5 sm:w-full sm:h-4/5 inline-block border-xl md:border-8 sm:border-8 border-black bg-springRain60 rounded-md box-border"
         >
-          <Snake
-            handleSnakeHitFood={this.handleSnakeHitFood}
-            handleHitBoundary={this.handleHitBoundary}
-            handleSnakeHitItself={this.handleSnakeHitItself}
-            startSnake={snakeStatus}
-          />
-          <Food x={foodPosition.x} y={foodPosition.y} />
+          <div className="c-reflector" />
+          <div className="h-full w-full" id="board">
+            <Snake
+              handleSnakeHitFood={this.handleSnakeHitFood}
+              handleHitBoundary={this.handleHitBoundary}
+              handleSnakeHitItself={this.handleSnakeHitItself}
+              startSnake={snakeStatus}
+            />
+            <Food x={foodPosition.x} y={foodPosition.y} />
+          </div>
         </div>
-        <div className="h-full w-1/5 inline-block box-border overflow-hidden">
-          {score}
+        <div className="h-full w-1/5 md:w-full md:h-1/5 sm:w-full sm:h-1/5 inline-block box-border bg-bermudaGray c-box-shadow overflow-hidden">
+          <div className="h-full flex flex-col flex-wrap justify-between pb-8 pt-8 box-border">
+            <div className="md:hidden">
+              <Title />
+            </div>
+            <div className="border-8 border-black m-1 bg-flaxShade relative shadow-inner overflow-hidden">
+              <div className="absolute -top-8 bottom-0 right-0 left-0 c-glass transform -rotate-12" />
+              <Score score={score} />
+            </div>
+            <div className="flex-grow" />
+            <div className="relative justify-self-end z-10">
+              <JoyStick />
+            </div>
+          </div>
         </div>
       </div>
     );

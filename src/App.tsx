@@ -7,7 +7,7 @@ const Home = () => <div>Home</div>;
 
 function App() {
   return (
-    <div className="bg-springRain60 w-screen h-screen">
+    <div className="bg-white w-screen h-screen">
       <Router>
         <RouterPage path="/" pageComponent={<Home />} />
         <RouterPage path="/game" pageComponent={<Game />} />
