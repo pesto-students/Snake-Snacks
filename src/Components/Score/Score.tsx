@@ -1,11 +1,21 @@
 import React from 'react';
 
 
-export default function Score(props: { score: number }) {
+export default function Score(props: IProps) {
   return (
-    <div className="text-4xl md:text-xl text-center leading-normal">
-      <span className="text-black">Your Score: </span>
-      <span className="text-black">{props.score}</span>
+    <div className="text-xl flex items-center justify-between leading-normal">
+      <span className="text-mojo">{props.text}: </span>
+      <span className="text-mojo">{props.score}</span>
     </div>
   );
 }
+
+
+interface IProps {
+  score: number | string;
+  text?: string;
+}
+
+Score.defaultProps = {
+  text: 'Your Score',
+};

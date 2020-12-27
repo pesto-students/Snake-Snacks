@@ -50,7 +50,7 @@ export default function HomeActions() {
         </>
       )}
       {isLoggedIn && (
-        <div>
+        <div className="z-20">
           <Dialog id="custom-modal">
             <div className="p-4 flex items-center justify-between text-xl">
               <div className="text-white">Snake Snacks</div>

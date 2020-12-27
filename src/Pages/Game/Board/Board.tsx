@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Food from '../../../Components/Food/Food';
 import JoyStick from '../../../Components/JoyStick/JoyStick';
-import Score from '../../../Components/Score/Score';
+import PlayPause from '../../../Components/PlayPause/PlayPause';
+import ScoreBoard from '../../../Components/ScoreBoard/ScoreBoard';
 import Snake from '../../../Components/Snake/Snake';
 import { Title } from '../../../Components/Title/Title';
 import isPointsInBound from '../../../Utils/usePointsInBoundedRect';
@@ -25,6 +26,7 @@ interface IState {
   snakeStatus: boolean;
   scoreDiff: number;
   score: number;
+  gameOver: boolean;
 }
 
 export default class Board extends Component<IProps, IState> {
@@ -37,12 +39,37 @@ export default class Board extends Component<IProps, IState> {
       },
       snakeStatus: true,
       scoreDiff: 5,
+      gameOver: false,
       score: 0,
     };
     this.handleSnakeHitFood = this.handleSnakeHitFood.bind(this);
     this.handleHitBoundary = this.handleHitBoundary.bind(this);
     this.handleScore = this.handleScore.bind(this);
     this.handleSnakeHitItself = this.handleSnakeHitItself.bind(this);
+    this.handlePlay = this.handlePlay.bind(this);
+    this.handlePause = this.handlePause.bind(this);
+    this.handleRestart = this.handleRestart.bind(this);
+  }
+
+  handlePlay() {
+    this.setState((prevState) => ({
+      ...prevState,
+      snakeStatus: true,
+    }));
+  }
+
+  handlePause() {
+    this.setState((prevState) => ({
+      ...prevState,
+      snakeStatus: false,
+    }));
+  }
+
+  handleRestart() {
+    this.setState((prevState) => ({
+      ...prevState,
+      gameOver: false,
+    }));
   }
 
   handleScore(diff: number) {
@@ -122,8 +149,8 @@ export default class Board extends Component<IProps, IState> {
     const { foodPosition, snakeStatus, score } = this.state;
     return (
       <div className="h-screen w-screen box-border c-linear-gradient rounded-xl c-box-shadow overflow-hidden">
-        <div className="h-full w-4/5 md:w-full md:h-4/5 sm:w-full sm:h-4/5  border-20 border-gray-700 align-top inline-block">
-          <div className="h-full w-full border-20 md:border-8 sm:border-8 border-black bg-springRain60 rounded-md box-border">
+        <div className="h-full  w-4/5 md:w-full md:h-4/5 sm:w-full sm:h-4/5 align-top inline-block">
+          <div className="h-full w-full border-xl md:border-8 sm:border-8 border-black bg-springRain60 rounded-md box-border">
             <div className="c-reflector" />
             <div className="h-full w-full" id="board">
               <Snake
@@ -141,12 +168,14 @@ export default class Board extends Component<IProps, IState> {
             <div className="md:hidden">
               <Title />
             </div>
-            <div className="border-8 border-black m-1 bg-flaxShade relative shadow-inner overflow-hidden">
-              <div className="absolute -top-8 bottom-0 right-0 left-0 c-glass transform -rotate-12" />
-              <Score score={score} />
-            </div>
+            <ScoreBoard score={score} />
             <div className="flex-grow" />
             <div className="relative justify-self-end z-10">
+              <PlayPause 
+                handlePause={this.handlePause} 
+                handlePlay={this.handlePlay} 
+                handleRestart={this.handleRestart}
+              />
               <JoyStick />
             </div>
           </div>
