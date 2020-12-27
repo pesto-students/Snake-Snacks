@@ -6,7 +6,6 @@ import {
   createHistory,
   createMemorySource,
   LocationProvider,
-  LocationProviderRenderFn,
 } from '@reach/router';
 import App from './App';
 

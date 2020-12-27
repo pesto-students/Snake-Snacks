@@ -122,18 +122,18 @@ export default class Board extends Component<IProps, IState> {
     const { foodPosition, snakeStatus, score } = this.state;
     return (
       <div className="h-screen w-screen box-border c-linear-gradient rounded-xl c-box-shadow overflow-hidden">
-        <div
-          className="h-full w-4/5 md:w-full md:h-4/5 sm:w-full sm:h-4/5 inline-block border-xl md:border-8 sm:border-8 border-black bg-springRain60 rounded-md box-border"
-        >
-          <div className="c-reflector" />
-          <div className="h-full w-full" id="board">
-            <Snake
-              handleSnakeHitFood={this.handleSnakeHitFood}
-              handleHitBoundary={this.handleHitBoundary}
-              handleSnakeHitItself={this.handleSnakeHitItself}
-              startSnake={snakeStatus}
-            />
-            <Food x={foodPosition.x} y={foodPosition.y} />
+        <div className="h-full w-4/5 md:w-full md:h-4/5 sm:w-full sm:h-4/5  border-20 border-gray-700 align-top inline-block">
+          <div className="h-full w-full border-20 md:border-8 sm:border-8 border-black bg-springRain60 rounded-md box-border">
+            <div className="c-reflector" />
+            <div className="h-full w-full" id="board">
+              <Snake
+                handleSnakeHitFood={this.handleSnakeHitFood}
+                handleHitBoundary={this.handleHitBoundary}
+                handleSnakeHitItself={this.handleSnakeHitItself}
+                startSnake={snakeStatus}
+              />
+              <Food x={foodPosition.x} y={foodPosition.y} />
+            </div>
           </div>
         </div>
         <div className="h-full w-1/5 md:w-full md:h-1/5 sm:w-full sm:h-1/5 inline-block box-border bg-bermudaGray c-box-shadow overflow-hidden">

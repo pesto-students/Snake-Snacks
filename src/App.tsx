@@ -1,9 +1,7 @@
 import React from 'react';
 import { Router, RouteComponentProps } from '@reach/router';
 import Game from './Pages/Game/Game';
-
-
-const Home = () => <div>Home</div>;
+import Home from './Pages/Home/Home';
 
 function App() {
   return (
