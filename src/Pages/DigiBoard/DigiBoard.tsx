@@ -1,5 +1,7 @@
 import React from 'react';
 import JoyStick from '../../Components/JoyStick/JoyStick';
+import PlayPause from '../../Components/PlayPause/PlayPause';
+import ScoreBoard from '../../Components/ScoreBoard/ScoreBoard';
 import { Title } from '../../Components/Title/Title';
 import TitleAnimation from '../../Components/TitleAnimation/TitleAnimation';
 import HomeActions from '../HomeActions/HomeActions';
@@ -26,8 +28,10 @@ export default function DigiBoard() {
           {/* <div className="border-8 border-black m-1 bg-flaxShade relative shadow-inner overflow-hidden">
             <div className="absolute -top-8 bottom-0 right-0 left-0 c-glass transform -rotate-12" />
           </div> */}
+          <ScoreBoard />
           <div className="flex-grow" />
           <div className="relative justify-self-end z-10">
+            <PlayPause />
             <JoyStick />
           </div>
         </div>
