@@ -90,7 +90,7 @@ export default function useDrawSnake(
 
     node.style('position', 'absolute');
     // TODO: take top as parameter
-    node.style('top', '60vh');
+    node.style('top', '60%');
     node.attr('id', 'snake');
     const updateSel = node
       .selectAll(':scope > div')

@@ -4,7 +4,7 @@ import './ScoreBoard.css';
 
 export default function ScoreBoard(props: IProps) {
   return (
-    <div className="score-board-container mt-4 m-auto">
+    <div className="score-board-container mt-4 md:h-full md:w-40 md:m-3 mmd:block mmd:m-2 m-auto box-border">
       <div className="score-board-inner-container w-full h-full text-mojo">
         <div className="text-xl text-mojo text-center" style={{ borderBottom: '2px solid #27292d' }}>
           Score Board

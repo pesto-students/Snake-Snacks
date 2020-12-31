@@ -5,7 +5,7 @@ import Home from './Pages/Home/Home';
 
 function App() {
   return (
-    <div className="bg-white w-screen h-screen">
+    <div className="bg-white w-screen h-screen box-border">
       <Router>
         <RouterPage path="/" pageComponent={<Home />} />
         <RouterPage path="/game" pageComponent={<Game />} />

@@ -12,7 +12,7 @@ export default function DigiBoard() {
   return (
     <div className="h-screen w-screen box-border c-linear-gradient rounded-xl c-box-shadow overflow-hidden">
       <div
-        className="h-full align-top w-4/5 md:w-full md:h-4/5 sm:w-full sm:h-4/5 inline-block border-xl md:border-8 sm:border-8 border-black bg-springRain60 rounded-md box-border"
+        className="h-full align-top w-4/5 mmd:w-3/4 mlg:w-4/5 md:w-full md:h-3/4 sm:w-full inline-block border-20 md:border-8 sm:border-8 border-black bg-springRain60 rounded-md box-border"
       >
         <div className="c-reflector" />
         <div className="h-full w-full p-8 relative flex flex-col justify-center items-center" id="board">
@@ -20,17 +20,14 @@ export default function DigiBoard() {
           <HomeActions />
         </div>
       </div>
-      <div className="h-full w-1/5 md:w-full md:h-1/5 sm:w-full sm:h-1/5 inline-block box-border bg-bermudaGray c-box-shadow overflow-hidden">
-        <div className="h-full flex flex-col flex-wrap justify-between pb-8 pt-8 box-border">
+      <div className="h-full w-1/5 mmd:w-1/4  md:w-full md:h-1/4 mlg:w-1/5 sm:w-full inline-block box-border bg-bermudaGray c-box-shadow overflow-hidden">
+        <div className="h-full flex flex-col md:flex-wrap justify-between pb-8 pt-8 md:pt-2 md:pb-2 box-border">
           <div className="md:hidden">
             <Title />
           </div>
-          {/* <div className="border-8 border-black m-1 bg-flaxShade relative shadow-inner overflow-hidden">
-            <div className="absolute -top-8 bottom-0 right-0 left-0 c-glass transform -rotate-12" />
-          </div> */}
           <ScoreBoard />
           <div className="flex-grow" />
-          <div className="relative justify-self-end z-10">
+          <div className="relative flex flex-row mmd:flex-col md:flex-grow md:items-start md:justify-items-start justify-self-end z-10">
             <PlayPause />
             <JoyStick />
           </div>
