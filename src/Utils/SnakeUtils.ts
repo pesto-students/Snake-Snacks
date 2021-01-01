@@ -201,12 +201,23 @@ export default function useDrawSnake(
     handleCurrentPosition();
   }, [updateHead, handleCurrentPosition]);
 
+  const restart = useCallback((ref) => {
+    numberOfPoints.current = N;
+    select(ref).selectAll(':scope > div').remove();
+    points.current = createPoints(N, L);
+    headAngle.current = (- Math.PI / 2);
+    delegation.current = 2;
+    drawSnake(ref);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [drawSnake]);
+  
   return {
     drawSnake,
     moveUp,
     setHeadAngle,
     increaseSnakeLength,
     increaseSnakeSpeed,
+    restart,
   };
 }
 

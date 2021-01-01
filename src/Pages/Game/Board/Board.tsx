@@ -49,6 +49,8 @@ export default class Board extends Component<IProps, IState> {
     this.handlePlay = this.handlePlay.bind(this);
     this.handlePause = this.handlePause.bind(this);
     this.handleRestart = this.handleRestart.bind(this);
+    this.handleStartGame = this.handleStartGame.bind(this);
+    this.handleEndGame = this.handleEndGame.bind(this);
   }
 
   handlePlay() {
@@ -66,9 +68,31 @@ export default class Board extends Component<IProps, IState> {
   }
 
   handleRestart() {
+    this.setState(
+      (prevState) => ({
+        ...prevState,
+        gameOver: true,
+        snakeStatus: false,
+        score: 0,
+      }),
+      () => {
+        this.handleStartGame();
+      },
+    );
+  }
+
+  handleEndGame() {
+    this.setState((prevState) => ({
+      ...prevState,
+      gameOver: true,
+    }));
+  }
+
+  handleStartGame() {
     this.setState((prevState) => ({
       ...prevState,
       gameOver: false,
+      snakeStatus: true,
     }));
   }
 
@@ -146,7 +170,7 @@ export default class Board extends Component<IProps, IState> {
   }
 
   render() {
-    const { foodPosition, snakeStatus, score } = this.state;
+    const { foodPosition, snakeStatus, score, gameOver } = this.state;
     return (
       <div className="h-screen w-screen box-border c-linear-gradient rounded-xl c-box-shadow overflow-hidden">
         <div className="h-full  w-4/5 md:w-full mmd:w-3/4 mlg:w-4/5 md:h-3/4 sm:w-full align-top inline-block">
@@ -158,6 +182,7 @@ export default class Board extends Component<IProps, IState> {
                 handleHitBoundary={this.handleHitBoundary}
                 handleSnakeHitItself={this.handleSnakeHitItself}
                 startSnake={snakeStatus}
+                gameOver={gameOver}
               />
               <Food x={foodPosition.x} y={foodPosition.y} />
             </div>
@@ -171,9 +196,9 @@ export default class Board extends Component<IProps, IState> {
             <ScoreBoard score={score} />
             <div className="flex-grow" />
             <div className="relative flex flex-row mmd:flex-col md:flex-grow md:items-start md:justify-items-start justify-self-end z-10">
-              <PlayPause 
-                handlePause={this.handlePause} 
-                handlePlay={this.handlePlay} 
+              <PlayPause
+                handlePause={this.handlePause}
+                handlePlay={this.handlePlay}
                 handleRestart={this.handleRestart}
               />
               <JoyStick />
