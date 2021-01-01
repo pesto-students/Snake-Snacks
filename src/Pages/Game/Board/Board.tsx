@@ -57,6 +57,7 @@ export default class Board extends Component<IProps, IState> {
     this.handleRestart = this.handleRestart.bind(this);
     this.handleStartGame = this.handleStartGame.bind(this);
     this.handleEndGame = this.handleEndGame.bind(this);
+    this.handleGame = this.handleGame.bind(this);
   }
 
   componentDidMount() {
@@ -169,6 +170,7 @@ export default class Board extends Component<IProps, IState> {
     this.setState((prevState) => ({
       ...prevState,
       snakeStatus: !status,
+      gameOver: true,
     }));
   }
 
@@ -185,8 +187,17 @@ export default class Board extends Component<IProps, IState> {
         this.setState((prevState) => ({
           ...prevState,
           snakeStatus: false,
+          gameOver: true,
         }));
       }
+    }
+  }
+
+  handleGame() {
+    if (this.state.gameOver) {
+      // send data to server if logged
+    } else {
+      // do nothing
     }
   }
 
