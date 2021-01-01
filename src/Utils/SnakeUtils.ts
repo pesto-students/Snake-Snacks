@@ -50,7 +50,7 @@ export default function useDrawSnake(
   const points = useRef<Array<ICoordinates>>(createPoints(N, L));
   const numberOfPoints = useRef<number>(N);
   const headAngle = useRef(-Math.PI / 2);
-  const delegation = useRef(2);
+  const delegation = useRef(3);
   const nodeRef = useRef();
 
   const checkSnakeHitItself = useCallback(() => {

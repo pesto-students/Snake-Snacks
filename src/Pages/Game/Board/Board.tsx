@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Food from '../../../Components/Food/Food';
 import JoyStick from '../../../Components/JoyStick/JoyStick';
+import NumberedStart from '../../../Components/NumberedStart/NumberedStart';
 import PlayPause from '../../../Components/PlayPause/PlayPause';
 import ScoreBoard from '../../../Components/ScoreBoard/ScoreBoard';
 import Snake from '../../../Components/Snake/Snake';
@@ -27,9 +28,13 @@ interface IState {
   scoreDiff: number;
   score: number;
   gameOver: boolean;
+  loaderCurrentState: number;
 }
 
 export default class Board extends Component<IProps, IState> {
+  
+  timerID: any;
+
   constructor(props: any) {
     super(props);
     this.state = {
@@ -37,10 +42,11 @@ export default class Board extends Component<IProps, IState> {
         x: 100,
         y: 100,
       },
-      snakeStatus: true,
+      snakeStatus: false,
       scoreDiff: 5,
-      gameOver: false,
+      gameOver: true,
       score: 0,
+      loaderCurrentState: 3,
     };
     this.handleSnakeHitFood = this.handleSnakeHitFood.bind(this);
     this.handleHitBoundary = this.handleHitBoundary.bind(this);
@@ -51,6 +57,10 @@ export default class Board extends Component<IProps, IState> {
     this.handleRestart = this.handleRestart.bind(this);
     this.handleStartGame = this.handleStartGame.bind(this);
     this.handleEndGame = this.handleEndGame.bind(this);
+  }
+
+  componentDidMount() {
+    this.handleStartGame();
   }
 
   handlePlay() {
@@ -74,6 +84,7 @@ export default class Board extends Component<IProps, IState> {
         gameOver: true,
         snakeStatus: false,
         score: 0,
+        loaderCurrentState: 3,
       }),
       () => {
         this.handleStartGame();
@@ -89,11 +100,21 @@ export default class Board extends Component<IProps, IState> {
   }
 
   handleStartGame() {
-    this.setState((prevState) => ({
-      ...prevState,
-      gameOver: false,
-      snakeStatus: true,
-    }));
+    this.timerID = setInterval(() => {
+      if (this.state.loaderCurrentState > 0) {
+        this.setState((prevState) => ({
+          ...prevState,
+          loaderCurrentState: prevState.loaderCurrentState - 1,
+        }));
+      } else {
+        this.setState((prevState) => ({
+          ...prevState,
+          gameOver: false,
+          snakeStatus: true,
+        }));
+        clearInterval(this.timerID);
+      }
+    }, 1000);
   }
 
   handleScore(diff: number) {
@@ -128,8 +149,8 @@ export default class Board extends Component<IProps, IState> {
         {
           x1: foodPosition.x - 15,
           y1: foodPosition.y - 15,
-          x2: foodPosition.x + 15,
-          y2: foodPosition.y + 15,
+          x2: foodPosition.x + 30,
+          y2: foodPosition.y + 40,
         },
       );
       if (isSnakeAteFood) {
@@ -169,8 +190,14 @@ export default class Board extends Component<IProps, IState> {
     }
   }
 
+
   render() {
-    const { foodPosition, snakeStatus, score, gameOver } = this.state;
+    const { 
+      foodPosition, 
+      snakeStatus, 
+      score, 
+      gameOver, 
+      loaderCurrentState } = this.state;
     return (
       <div className="h-screen w-screen box-border c-linear-gradient rounded-xl c-box-shadow overflow-hidden">
         <div className="h-full  w-4/5 md:w-full mmd:w-3/4 mlg:w-4/5 md:h-3/4 sm:w-full align-top inline-block">
@@ -184,6 +211,12 @@ export default class Board extends Component<IProps, IState> {
                 startSnake={snakeStatus}
                 gameOver={gameOver}
               />
+              {
+                  loaderCurrentState > 0 &&
+                  <NumberedStart 
+                    currentNumber={loaderCurrentState}
+                  />
+              }
               <Food x={foodPosition.x} y={foodPosition.y} />
             </div>
           </div>
