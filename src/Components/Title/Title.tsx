@@ -4,10 +4,10 @@ import React from 'react';
 export function Title() {
   return (
     <>
-      <div className="text-7xl md:text-xl sm:text-base text-center text-white">
+      <div className="md:text-xl mmd:text-4xl sm:text-base text-center text-white">
         Snake
       </div>
-      <div className="text-6xl md:text-xl sm:text-base text-center text-lightGray">
+      <div className="md:text-xl mmd:text-3xl sm:text-base text-center text-lightGray">
         Snacks
       </div>
     </>

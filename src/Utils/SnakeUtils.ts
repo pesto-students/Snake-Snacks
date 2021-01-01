@@ -50,7 +50,7 @@ export default function useDrawSnake(
   const points = useRef<Array<ICoordinates>>(createPoints(N, L));
   const numberOfPoints = useRef<number>(N);
   const headAngle = useRef(-Math.PI / 2);
-  const delegation = useRef(2);
+  const delegation = useRef(3);
   const nodeRef = useRef();
 
   const checkSnakeHitItself = useCallback(() => {
@@ -90,7 +90,7 @@ export default function useDrawSnake(
 
     node.style('position', 'absolute');
     // TODO: take top as parameter
-    node.style('top', '60vh');
+    node.style('top', '60%');
     node.attr('id', 'snake');
     const updateSel = node
       .selectAll(':scope > div')
@@ -201,12 +201,23 @@ export default function useDrawSnake(
     handleCurrentPosition();
   }, [updateHead, handleCurrentPosition]);
 
+  const restart = useCallback((ref) => {
+    numberOfPoints.current = N;
+    select(ref).selectAll(':scope > div').remove();
+    points.current = createPoints(N, L);
+    headAngle.current = (- Math.PI / 2);
+    delegation.current = 2;
+    drawSnake(ref);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [drawSnake]);
+  
   return {
     drawSnake,
     moveUp,
     setHeadAngle,
     increaseSnakeLength,
     increaseSnakeSpeed,
+    restart,
   };
 }
 

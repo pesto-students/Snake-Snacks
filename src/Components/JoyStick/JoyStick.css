@@ -1,16 +1,21 @@
-.move-btn {
-  box-shadow: 0 -5px 5px rgba(255, 255, 255, 0.15),
-    /* Highlight */ 0 0 0 5px #1c1e1f, /* Inner shadow */ 0 0 0 8px #000,
-    /* Hole */ 0 20px 20px 5px rgba(0, 0, 0, 0.5),
-    /* Shadow */ 0 5px 5px 8px rgba(40, 45, 47, 1),
-    /* Border highlight */ 0 0 0 13px #1a1c1e,
-    /* Border */ 0 1px 1px 12px rgba(255, 255, 255, 0.5);
-}
-
 .joystick-container {
     margin: auto;
-    height: 250px;
-    width: 300px;
+    max-height: 250px;
+    max-width: 300px;
+}
+
+@media(max-width: 767px) {
+    .joystick-container {
+        height: 9.5rem;
+        width: 8.5rem;
+    }
+}
+
+@media(min-width: 767px) {
+    .joystick-container {
+        height: 13rem;
+        width: 15rem;
+    }
 }
 
 .btn-up {
@@ -18,9 +23,23 @@
     top: 10px;
 }
 
+@media (max-width: 767px) {
+    .btn-up {
+        left: calc(50% - 0.5rem);
+        top: 1rem;
+    }
+}
+
 .btn-down {
     left: calc( 50% - 20px );
     top: calc( 100% - 60px );
+}
+
+@media (max-width: 767px) {
+    .btn-down {
+        left: calc(50% - 0.5rem);
+        top: calc( 100% - 2rem );
+    }
 }
 
 .btn-left {
@@ -28,9 +47,25 @@
     left: 20px;
 }
 
+
+@media (max-width: 767px) {
+    .btn-left {
+        left: calc( 0.5rem );
+        top: calc( 50% - 0.5rem );
+    }
+}
+
 .btn-right {
     top: calc( 50% - 30px );
     right: 20px;
+}
+
+
+@media (max-width: 767px) {
+    .btn-right {
+        right: 0.5rem;
+        top: calc( 50% - 0.5rem );
+    }
 }
 
 .joystick-background {

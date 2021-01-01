@@ -34,6 +34,20 @@
       /* Border */ 0 1px 1px 12px rgba(255, 255, 255, 0.5);
 }
 
+
+@media (max-width: 767px) {
+    .move-btn {
+        font-size: 0.5rem;
+        width: 4rem;
+        box-shadow: 0 -.1rem 0.1rem rgba(255, 255, 255, 0.15),
+          /* Highlight */ 0 0 0 0.1rem #1c1e1f, /* Inner shadow */ 0 0 0 0.2rem #000,
+          /* Hole */ 0 0.8rem 0.8rem 0.1rem rgba(0, 0, 0, 0.5),
+          /* Shadow */ 0 0.1rem 0.1rem 0.2rem rgba(40, 45, 47, 1),
+          /* Border highlight */ 0 0 0 0.2rem #1a1c1e,
+          /* Border */ 0 1px 1px 0.1rem rgba(255, 255, 255, 0.5);
+    }
+}
+
 .c-reflector {
     position: absolute;
     width: 94%;

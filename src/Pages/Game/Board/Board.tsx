@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Food from '../../../Components/Food/Food';
 import JoyStick from '../../../Components/JoyStick/JoyStick';
+import NumberedStart from '../../../Components/NumberedStart/NumberedStart';
 import PlayPause from '../../../Components/PlayPause/PlayPause';
 import ScoreBoard from '../../../Components/ScoreBoard/ScoreBoard';
 import Snake from '../../../Components/Snake/Snake';
@@ -27,9 +28,13 @@ interface IState {
   scoreDiff: number;
   score: number;
   gameOver: boolean;
+  loaderCurrentState: number;
 }
 
 export default class Board extends Component<IProps, IState> {
+  
+  timerID: any;
+
   constructor(props: any) {
     super(props);
     this.state = {
@@ -37,10 +42,11 @@ export default class Board extends Component<IProps, IState> {
         x: 100,
         y: 100,
       },
-      snakeStatus: true,
+      snakeStatus: false,
       scoreDiff: 5,
-      gameOver: false,
+      gameOver: true,
       score: 0,
+      loaderCurrentState: 3,
     };
     this.handleSnakeHitFood = this.handleSnakeHitFood.bind(this);
     this.handleHitBoundary = this.handleHitBoundary.bind(this);
@@ -49,6 +55,13 @@ export default class Board extends Component<IProps, IState> {
     this.handlePlay = this.handlePlay.bind(this);
     this.handlePause = this.handlePause.bind(this);
     this.handleRestart = this.handleRestart.bind(this);
+    this.handleStartGame = this.handleStartGame.bind(this);
+    this.handleEndGame = this.handleEndGame.bind(this);
+    this.handleGame = this.handleGame.bind(this);
+  }
+
+  componentDidMount() {
+    this.handleStartGame();
   }
 
   handlePlay() {
@@ -66,10 +79,43 @@ export default class Board extends Component<IProps, IState> {
   }
 
   handleRestart() {
+    this.setState(
+      (prevState) => ({
+        ...prevState,
+        gameOver: true,
+        snakeStatus: false,
+        score: 0,
+        loaderCurrentState: 3,
+      }),
+      () => {
+        this.handleStartGame();
+      },
+    );
+  }
+
+  handleEndGame() {
     this.setState((prevState) => ({
       ...prevState,
-      gameOver: false,
+      gameOver: true,
     }));
+  }
+
+  handleStartGame() {
+    this.timerID = setInterval(() => {
+      if (this.state.loaderCurrentState > 0) {
+        this.setState((prevState) => ({
+          ...prevState,
+          loaderCurrentState: prevState.loaderCurrentState - 1,
+        }));
+      } else {
+        this.setState((prevState) => ({
+          ...prevState,
+          gameOver: false,
+          snakeStatus: true,
+        }));
+        clearInterval(this.timerID);
+      }
+    }, 1000);
   }
 
   handleScore(diff: number) {
@@ -104,8 +150,8 @@ export default class Board extends Component<IProps, IState> {
         {
           x1: foodPosition.x - 15,
           y1: foodPosition.y - 15,
-          x2: foodPosition.x + 15,
-          y2: foodPosition.y + 15,
+          x2: foodPosition.x + 30,
+          y2: foodPosition.y + 40,
         },
       );
       if (isSnakeAteFood) {
@@ -124,6 +170,7 @@ export default class Board extends Component<IProps, IState> {
     this.setState((prevState) => ({
       ...prevState,
       snakeStatus: !status,
+      gameOver: true,
     }));
   }
 
@@ -140,40 +187,62 @@ export default class Board extends Component<IProps, IState> {
         this.setState((prevState) => ({
           ...prevState,
           snakeStatus: false,
+          gameOver: true,
         }));
       }
     }
   }
 
+  handleGame() {
+    if (this.state.gameOver) {
+      // send data to server if logged
+    } else {
+      // do nothing
+    }
+  }
+
+
   render() {
-    const { foodPosition, snakeStatus, score } = this.state;
+    const { 
+      foodPosition, 
+      snakeStatus, 
+      score, 
+      gameOver, 
+      loaderCurrentState } = this.state;
     return (
       <div className="h-screen w-screen box-border c-linear-gradient rounded-xl c-box-shadow overflow-hidden">
-        <div className="h-full  w-4/5 md:w-full md:h-4/5 sm:w-full sm:h-4/5 align-top inline-block">
-          <div className="h-full w-full border-xl md:border-8 sm:border-8 border-black bg-springRain60 rounded-md box-border">
+        <div className="h-full  w-4/5 md:w-full mmd:w-3/4 mlg:w-4/5 md:h-3/4 sm:w-full align-top inline-block">
+          <div className="h-full w-full border-20 md:border-8 sm:border-8 border-black bg-springRain60 rounded-md box-border">
             <div className="c-reflector" />
-            <div className="h-full w-full" id="board">
+            <div className="h-full w-full relative" id="board">
               <Snake
                 handleSnakeHitFood={this.handleSnakeHitFood}
                 handleHitBoundary={this.handleHitBoundary}
                 handleSnakeHitItself={this.handleSnakeHitItself}
                 startSnake={snakeStatus}
+                gameOver={gameOver}
               />
+              {
+                  loaderCurrentState > 0 &&
+                  <NumberedStart 
+                    currentNumber={loaderCurrentState}
+                  />
+              }
               <Food x={foodPosition.x} y={foodPosition.y} />
             </div>
           </div>
         </div>
-        <div className="h-full w-1/5 md:w-full md:h-1/5 sm:w-full sm:h-1/5 inline-block box-border bg-bermudaGray c-box-shadow overflow-hidden">
-          <div className="h-full flex flex-col flex-wrap justify-between pb-8 pt-8 box-border">
+        <div className="h-full w-1/5 mmd:w-1/4 mmd:p-2 md:w-full mlg:w-1/5 md:h-1/4 sm:w-full inline-block box-border bg-bermudaGray c-box-shadow overflow-hidden">
+          <div className="h-full w-full flex flex-col md:flex-wrap justify-between pb-4 pt-4 md:pt-2 md:pb-2 box-border">
             <div className="md:hidden">
               <Title />
             </div>
             <ScoreBoard score={score} />
             <div className="flex-grow" />
-            <div className="relative justify-self-end z-10">
-              <PlayPause 
-                handlePause={this.handlePause} 
-                handlePlay={this.handlePlay} 
+            <div className="relative flex flex-row mmd:flex-col md:flex-grow md:items-start md:justify-items-start justify-self-end z-10">
+              <PlayPause
+                handlePause={this.handlePause}
+                handlePlay={this.handlePlay}
                 handleRestart={this.handleRestart}
               />
               <JoyStick />

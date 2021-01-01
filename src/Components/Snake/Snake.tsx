@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import useDrawSnake from '../../Utils/SnakeUtils';
 
 export default function Snake(props: PropTypes) {
-  const { startSnake, handleSnakeHitItself } = props;
+  const { startSnake, handleSnakeHitItself, gameOver } = props;
   // hold the current container node
   const snakeNode = useRef<HTMLDivElement | null>();
   const timeRef = useRef<number>();
@@ -31,6 +31,7 @@ export default function Snake(props: PropTypes) {
     setHeadAngle,
     increaseSnakeLength,
     increaseSnakeSpeed,
+    restart,
   } = useDrawSnake(handleCurrentPosition, 30, 5, handleSnakeHitItself);
 
   const assignNode = (node: HTMLDivElement | null) => {
@@ -60,6 +61,14 @@ export default function Snake(props: PropTypes) {
       cancelAnimationFrame(snakeAnimation.current as number);
     }
   };
+
+  useEffect(() => {
+    if (gameOver) {
+      cancelAnimationFrame(snakeAnimation.current as number);
+    } else {
+      restart(snakeNode.current);
+    }
+  }, [gameOver]);
 
   useEffect(() => {
     if (startSnake) {
@@ -93,4 +102,5 @@ interface PropTypes {
   handleHitBoundary: Function;
   handleSnakeHitItself: Function;
   startSnake: boolean;
+  gameOver: boolean;
 }
