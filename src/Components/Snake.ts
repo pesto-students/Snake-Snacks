@@ -1,11 +1,38 @@
-import { IGet, IPosition, ISet, ISnake, IState } from './interfaces';
+import {
+    IFinishGame,
+    IGet,
+    IGetKey,
+    IPosition,
+    ISet,
+    ISnake,
+    IState,
+} from './interfaces';
 
 export default class Snake {
     length: number;
 
+    name: string;
+
     radius: number;
 
     points: Array<IPosition> = [];
+
+    inertia: number;
+
+    rotation = 0;
+
+    speed = 0.25;
+
+    velocity = {
+        x: 0,
+        y: 0,
+    };
+
+    position: IPosition;
+
+    score = 0;
+
+    delete = false;
 
     setPlayerPosition: ISet;
 
@@ -15,14 +42,23 @@ export default class Snake {
 
     getOffset: IGet;
 
+    getKey: IGetKey;
+
+    finishGame: IFinishGame;
+
     constructor(snake: ISnake) {
         this.length = snake.length;
         this.radius = snake.radius;
+        this.inertia = snake.inertia;
+        this.name = snake.name;
         this.setPlayerPosition = snake.setPlayerPos;
         this.getPlayerPosition = snake.getPlayerPos;
         this.setOffset = snake.setOffset;
         this.getOffset = snake.getOffset;
         this.generatePoints();
+        this.getKey = snake.getKey;
+        this.position = this.getPlayerPosition();
+        this.finishGame = snake.finishGame;
     }
 
     generatePoints(): void {
@@ -31,7 +67,7 @@ export default class Snake {
         const len = this.radius;
         for (let i = 0; i < this.length; i += 1) {
             this.points.push({ x, y: tmpY + len });
-            tmpY += this.radius / 2;
+            tmpY += this.radius;
         }
     }
 
@@ -59,24 +95,21 @@ export default class Snake {
         const head = this.points[0];
         context.save();
         context.beginPath();
-        context.arc(
+        context.translate(
             head.x - this.getOffset().x,
-            head.y - this.getOffset().y,
-            this.radius * 1.25,
-            0,
-            Math.PI * 2,
-            true
+            head.y - this.getOffset().y
         );
+        context.rotate((this.rotation * Math.PI) / 180);
+        context.arc(0, 0, this.radius * 1.25, 0, Math.PI * 2, true);
         context.fillStyle = '#CD384B';
         context.fill();
         context.closePath();
-        context.restore();
 
         const anticlockwise = true;
         context.beginPath();
         context.arc(
-            head.x - this.getOffset().x - (this.radius * 1.25) / 2,
-            head.y - this.getOffset().y,
+            0 - (this.radius * 1.25) / 2,
+            0,
             3,
             0,
             Math.PI * 2,
@@ -88,10 +121,11 @@ export default class Snake {
         context.lineWidth = 3;
         context.stroke();
         context.closePath();
+
         context.beginPath();
         context.arc(
-            head.x - this.getOffset().x + (this.radius * 1.25) / 2,
-            head.y - this.getOffset().y,
+            0 + (this.radius * 1.25) / 2,
+            0,
             3,
             0,
             Math.PI * 2,
@@ -103,6 +137,7 @@ export default class Snake {
         context.lineWidth = 3;
         context.stroke();
         context.closePath();
+        context.restore();
     }
 
     renderSnakeBody(context: CanvasRenderingContext2D): void {
@@ -111,15 +146,12 @@ export default class Snake {
         const diff = (this.radius - minRadius) / this.length;
         this.points.forEach((point: IPosition) => {
             context.save();
-            context.beginPath();
-            context.arc(
+            context.translate(
                 point.x - this.getOffset().x,
-                point.y - this.getOffset().y,
-                radiusGrad,
-                0,
-                Math.PI * 2,
-                true
+                point.y - this.getOffset().y
             );
+            context.beginPath();
+            context.arc(0, 0, radiusGrad, 0, Math.PI * 2, true);
             context.fillStyle = '#CD384B';
             context.fill();
             context.lineWidth = 0.2;
@@ -142,11 +174,82 @@ export default class Snake {
         });
     }
 
+    accelerate(): void {
+        if (Math.abs(this.velocity.x) < 4) {
+            this.velocity.x -= this.speed;
+        }
+        if (Math.abs(this.velocity.y) < 4) {
+            this.velocity.y -= this.speed;
+        }
+    }
+
+    rotateSnake(direction: string): void {
+        if (direction === 'left') {
+            this.rotation -= 6;
+        }
+        if (direction === 'right') {
+            this.rotation += 6;
+        }
+    }
+
+    addScore(s: number): void {
+        this.score += s;
+
+        if (this.score % 10 === 0) {
+            const last = this.points[this.length - 1];
+            this.length += 1;
+            this.points.push(last);
+        }
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    destroy(): void {
+        this.delete = true;
+        this.finishGame(this);
+    }
+
     render(state: IState): void {
         const { context } = state;
         if (!context) {
             return;
         }
+
+        const key = this.getKey();
+
+        if (key.up) {
+            this.accelerate();
+        }
+
+        if (key.left) {
+            this.rotateSnake('left');
+        }
+
+        if (key.right) {
+            this.rotateSnake('right');
+        }
+
+        // Move
+        const { x, y } = this.velocity;
+        this.setPlayerPosition({
+            x:
+                this.getPlayerPosition().x +
+                this.velocity.x * Math.sin(-(this.rotation * Math.PI) / 180),
+            y:
+                this.getPlayerPosition().y +
+                this.velocity.y * Math.cos(-(this.rotation * Math.PI) / 180),
+        });
+        this.velocity.x = x * this.inertia;
+        this.velocity.y = y * this.inertia;
+
+        this.position = this.getPlayerPosition();
+
+        const newHead = this.points[0];
+        newHead.x = this.getPlayerPosition().x;
+        newHead.y = this.getPlayerPosition().y;
+
+        const [head, ...remaining] = this.points;
+        this.points = [newHead, ...remaining];
+
         this.generateLinkConstraint();
         this.renderSnakeBody(context);
         this.renderSnakeHead(context);
