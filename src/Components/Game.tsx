@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/no-unused-state */
 import React, { Component } from 'react';
 import generateRandoNumberBetweenNumber from '../Utils/random';
 import Egg from './Egg';
 import GameOVer from './GameOver';
-import { IKey, IPosition, IScores, IState } from './interfaces';
+import { IKey, IPosition, IState } from './interfaces';
 import ScoresBoard from './ScoresBoard';
 import Snake from './Snake';
 import Universe from './Universe';

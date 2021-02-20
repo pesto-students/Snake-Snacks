@@ -247,6 +247,7 @@ export default class Snake {
         newHead.x = this.getPlayerPosition().x;
         newHead.y = this.getPlayerPosition().y;
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const [head, ...remaining] = this.points;
         this.points = [newHead, ...remaining];
 
